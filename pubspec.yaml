@@ -18,6 +18,9 @@ dependencies:
   dio: ^5.0.0
   geolocator: ^12.0.0
   url_launcher: ^6.0.0
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.4
+  google_sign_in: ^6.2.1
   # Dependências web
   # google_maps_flutter_web removido
   geolocator_web: ^4.0.0

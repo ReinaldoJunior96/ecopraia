@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "910835657702",
+    "project_id": "ecopraia-b69db",
+    "storage_bucket": "ecopraia-b69db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910835657702:android:218437e653acbe12e60427",
+        "android_client_info": {
+          "package_name": "com.mycompany.CounterApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOnIgF5kSxFIhBPu5Gg8JjA3cn_zozUOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
