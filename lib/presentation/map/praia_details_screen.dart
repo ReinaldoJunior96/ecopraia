@@ -18,7 +18,6 @@ class PraiaDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Imagem da praia
             if (praia.imagemCapa.isNotEmpty)
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
@@ -34,37 +33,56 @@ class PraiaDetailsScreen extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 16),
-
-            // Descrição
             Text(
               praia.descricao,
               style: const TextStyle(fontSize: 16, color: Colors.black87),
             ),
             const SizedBox(height: 16),
-
-            // Avaliações
             Text(
-              'Avaliações',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.teal,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildRatingRow('🧹 Limpeza', praia.mediaNotas),
-                _buildRatingRow('💧 Água', praia.mediaNotas),
-                _buildRatingRow('🛟 Segurança', praia.mediaNotas),
-                _buildRatingRow('🏖️ Estrutura', praia.mediaNotas),
-                _buildRatingRow('🌅 Beleza', praia.mediaNotas),
-              ],
+              'Avaliações: ${praia.mediaNotas} (${praia.totalAvaliacoes} avaliações)',
+              style: const TextStyle(fontSize: 16, color: Colors.black87),
             ),
             const SizedBox(height: 16),
-
-            // Pontos de interesse
+            Text(
+              'Bairro: ${praia.bairro}',
+              style: const TextStyle(fontSize: 16, color: Colors.black87),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Status: ${praia.status}',
+              style: const TextStyle(fontSize: 16, color: Colors.black87),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Categoria: ${praia.categoria}',
+              style: const TextStyle(fontSize: 16, color: Colors.black87),
+            ),
+            const SizedBox(height: 16),
+            if (praia.tags.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tags',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: praia.tags
+                        .map((tag) => Chip(
+                              label: Text(tag),
+                              backgroundColor: Colors.teal.shade100,
+                            ))
+                        .toList(),
+                  ),
+                ],
+              ),
+            const SizedBox(height: 16),
             if (praia.pois.isNotEmpty)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,31 +106,6 @@ class PraiaDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildRatingRow(String label, double rating) {
-    return Row(
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 16, color: Colors.black87),
-        ),
-        const SizedBox(width: 8),
-        Row(
-          children: List.generate(5, (index) {
-            if (index < rating.floor()) {
-              return const Icon(Icons.star, color: Colors.yellow, size: 20);
-            } else if (index < rating) {
-              return const Icon(Icons.star_half,
-                  color: Colors.yellow, size: 20);
-            } else {
-              return const Icon(Icons.star_border,
-                  color: Colors.yellow, size: 20);
-            }
-          }),
-        ),
-      ],
     );
   }
 }

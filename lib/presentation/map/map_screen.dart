@@ -165,25 +165,25 @@ class _MapScreenState extends State<MapScreen> {
               ),
 
               // Bottom sheet da praia selecionada
-              if (mapState.selectedPraia != null)
-                Positioned.fill(
-                  child: GestureDetector(
-                    onTap: mapState.clearSelection,
-                    child: Container(
-                      color: Colors.black.withOpacity(0.3),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: GestureDetector(
-                          onTap: () {}, // Evita fechar ao tocar no sheet
-                          child: PraiaBottomSheet(
-                            praia: mapState.selectedPraia!,
-                            onClose: mapState.clearSelection,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+              // if (mapState.selectedPraia != null)
+              //   Positioned.fill(
+              //     child: GestureDetector(
+              //       onTap: mapState.clearSelection,
+              //       child: Container(
+              //         color: Colors.black.withOpacity(0.3),
+              //         child: Align(
+              //           alignment: Alignment.bottomCenter,
+              //           child: GestureDetector(
+              //             onTap: () {}, // Evita fechar ao tocar no sheet
+              //             child: PraiaBottomSheet(
+              //               praia: mapState.selectedPraia!,
+              //               onClose: mapState.clearSelection,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
             ],
           );
         },
@@ -231,12 +231,14 @@ class _MapScreenState extends State<MapScreen> {
             width: isSelected ? 60 : 40,
             height: isSelected ? 60 : 40,
             child: GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PraiaDetailsScreen(praia: praia),
+              onTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PraiaDetailsScreen(praia: praia),
+                  ),
                 ),
-              ),
+              },
               child: marker,
             ),
           );

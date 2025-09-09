@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecopraia/data/models/praia.dart';
 import 'package:ecopraia/data/repositories/praia_repository.dart';
-import 'package:ecopraia/data/repositories/mock_praia_repository.dart';
+import 'package:ecopraia/services/api_client.dart';
+import 'package:ecopraia/data/repositories/api_praia_repository.dart';
 import 'package:ecopraia/presentation/map/map_screen.dart';
 import 'package:ecopraia/presentation/map/map_state.dart';
 import 'package:ecopraia/presentation/discover/discover_screen.dart';
@@ -24,7 +25,7 @@ class _PraiaMaisSeguraAppState extends State<PraiaMaisSeguraApp> {
   void initState() {
     super.initState();
     // TODO: Futuramente, trocar por ApiPraiaRepository quando API estiver pronta
-    _repository = MockPraiaRepository();
+    _repository = ApiPraiaRepository(apiClient: ApiClient());
     _mapState = MapState(repository: _repository);
   }
 

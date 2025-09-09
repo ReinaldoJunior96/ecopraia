@@ -17,8 +17,23 @@ class ApiPraiaRepository implements PraiaRepository {
     required double maxLat,
   }) async {
     // TODO: Implementar chamada GET /praias?bbox=minLng,minLat,maxLng,maxLat
-    throw UnimplementedError('API não implementada ainda');
-    
+    try {
+      final response = await _apiClient.get(
+        '/praias',
+        queryParameters: {
+          'minLng': minLng.toString(),
+          'minLat': minLat.toString(),
+          'maxLng': maxLng.toString(),
+          'maxLat': maxLat.toString(),
+        },
+      );
+
+      final List<dynamic> data = response.data;
+      return data.map((json) => Praia.fromJson(json)).toList();
+    } catch (e) {
+      throw Exception('Erro ao buscar praias: ${e.toString()}');
+    }
+
     // Exemplo de implementação futura:
     /*
     try {
@@ -41,7 +56,7 @@ class ApiPraiaRepository implements PraiaRepository {
   Future<Praia?> getPraiaDetail(int id) async {
     // TODO: Implementar chamada GET /praias/{id}
     throw UnimplementedError('API não implementada ainda');
-    
+
     // Exemplo de implementação futura:
     /*
     try {
@@ -60,7 +75,7 @@ class ApiPraiaRepository implements PraiaRepository {
   Future<List<Praia>> getAllPraias() async {
     // TODO: Implementar chamada GET /praias
     throw UnimplementedError('API não implementada ainda');
-    
+
     // Exemplo de implementação futura:
     /*
     try {

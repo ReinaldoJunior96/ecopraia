@@ -119,6 +119,7 @@ class MapState extends ChangeNotifier {
       );
 
       _praias = praias;
+      //print('Praias carregadas: ${praias.map((p) => p.toJson()).toList()}');
       _setLoadingState(MapLoadingState.loaded);
     } catch (e) {
       _setError('Erro ao carregar praias: ${e.toString()}');
