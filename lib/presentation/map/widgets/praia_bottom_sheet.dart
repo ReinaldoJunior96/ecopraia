@@ -92,18 +92,18 @@ class _PraiaBottomSheetState extends State<PraiaBottomSheet>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Handle do drag
-            Container(
-              margin: const EdgeInsets.only(top: 8),
-              alignment: Alignment.center,
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            // Container(
+            //   margin: const EdgeInsets.only(top: 8),
+            //   alignment: Alignment.center,
+            //   child: Container(
+            //     width: 40,
+            //     height: 4,
+            //     decoration: BoxDecoration(
+            //       color: Colors.grey.withOpacity(0.3),
+            //       borderRadius: BorderRadius.circular(2),
+            //     ),
+            //   ),
+            // ),
 
             // Conteúdo principal
             Padding(

@@ -4,12 +4,14 @@ class Poi {
   final String tipo;
   final double lat;
   final double lng;
+  final String? descricao;
 
   Poi({
     required this.id,
     required this.tipo,
     required this.lat,
     required this.lng,
+    this.descricao,
   });
 
   /// Cria um POI a partir de um mapa JSON
@@ -19,6 +21,7 @@ class Poi {
       tipo: json['tipo'] as String,
       lat: (json['lat'] as num).toDouble(),
       lng: (json['lng'] as num).toDouble(),
+      descricao: json['descricao'] as String?,
     );
   }
 
@@ -29,6 +32,7 @@ class Poi {
       'tipo': tipo,
       'lat': lat,
       'lng': lng,
+      'descricao': descricao,
     };
   }
 
@@ -43,6 +47,6 @@ class Poi {
 
   @override
   String toString() {
-    return 'Poi(id: $id, tipo: $tipo, lat: $lat, lng: $lng)';
+    return 'Poi(id: $id, tipo: $tipo, lat: $lat, lng: $lng, descricao: $descricao)';
   }
 }

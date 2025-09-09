@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:latlong2/latlong.dart';
-// ...existing code...
 import 'package:geolocator/geolocator.dart';
 import 'package:ecopraia/data/models/praia.dart';
 import 'package:ecopraia/data/repositories/praia_repository.dart';
@@ -29,6 +28,12 @@ class MapState extends ChangeNotifier {
       bairro: 'Novo Bairro',
       descricao: 'Praia registrada pelo usuário.',
       pois: [],
+      mediaNotas: 0.0,
+      totalAvaliacoes: 0,
+      acessibilidade: false,
+      tags: [],
+      imagemCapa: '',
+      atualizadoEm: DateTime.now(),
     );
     _praias.add(novaPraia);
     notifyListeners();
@@ -47,6 +52,12 @@ class MapState extends ChangeNotifier {
       categoria: 'praia',
       descricao: 'Praia registrada pelo usuário.',
       pois: [],
+      mediaNotas: 0.0,
+      totalAvaliacoes: 0,
+      acessibilidade: false,
+      tags: [],
+      imagemCapa: '',
+      atualizadoEm: DateTime.now(),
     );
     _praias.add(novaPraia);
     notifyListeners();
@@ -113,8 +124,6 @@ class MapState extends ChangeNotifier {
       _setError('Erro ao carregar praias: ${e.toString()}');
     }
   }
-
-  // ...existing code...
 
   /// Seleciona uma praia
   void selectBeach(Praia praia) {

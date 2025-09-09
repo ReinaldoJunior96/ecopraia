@@ -8,7 +8,8 @@ import 'package:ecopraia/presentation/map/widgets/poi_chip_list.dart';
 import 'package:ecopraia/presentation/map/widgets/loading_chip.dart';
 import 'package:ecopraia/presentation/map/widgets/praia_bottom_sheet.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// ...existing code...
+import 'package:ecopraia/presentation/widgets/app_sidemenu.dart';
+import 'package:ecopraia/presentation/map/praia_details_screen.dart';
 
 /// Tela principal do mapa com praias interativas
 class MapScreen extends StatefulWidget {
@@ -19,6 +20,11 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  void _logout() async {
+    // Apenas para fechar o Drawer, sem ação de logout real
+    Navigator.of(context).pop();
+  }
+
   String _categoriaSelecionada = 'todas';
 
   @override
@@ -32,6 +38,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppSideMenu(onLogout: _logout),
       body: Consumer<MapState>(
         builder: (context, mapState, child) {
           return Stack(
@@ -66,67 +73,43 @@ class _MapScreenState extends State<MapScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Row(
                     children: [
-                      // Chips de categoria
-                      ChoiceChip(
-                        label: Text('Todas'),
-                        selected: _categoriaSelecionada == 'todas',
-                        onSelected: (v) {
-                          setState(() => _categoriaSelecionada = 'todas');
-                        },
-                      ),
-                      SizedBox(width: 8),
-                      ChoiceChip(
-                        label: Text('Praias'),
-                        selected: _categoriaSelecionada == 'praia',
-                        onSelected: (v) {
-                          setState(() => _categoriaSelecionada = 'praia');
-                        },
-                      ),
-                      SizedBox(width: 8),
-                      ChoiceChip(
-                        label: Text('Bombeiros'),
-                        selected: _categoriaSelecionada == 'bombeiro',
-                        onSelected: (v) {
-                          setState(() => _categoriaSelecionada = 'bombeiro');
-                        },
-                      ),
-                      Spacer(),
+                      // Botão flutuante de menu
                       Material(
                         color: Colors.white,
                         elevation: 4,
-                        borderRadius: BorderRadius.circular(30),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(30),
-                          onTap: () {
-                            mapState.getCurrentLocation().then((_) {
-                              final pos = mapState.currentPosition;
-                              if (pos != null) {
-                                mapState.registerMockPraiaComLoc(
-                                    pos.latitude, pos.longitude);
-                                print(
-                                    'Praia registrada em: lat ${pos.latitude}, lng ${pos.longitude}');
-                              } else {
-                                print('Localização não disponível');
-                              }
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            child: Row(
-                              children: [
-                                Icon(Icons.add_location,
-                                    color: Colors.teal, size: 24),
-                                SizedBox(width: 8),
-                                Text('Registrar Praia',
-                                    style: TextStyle(
-                                        color: Colors.teal,
-                                        fontWeight: FontWeight.bold)),
-                              ],
-                            ),
+                        shape: const CircleBorder(),
+                        child: Builder(
+                          builder: (context) => IconButton(
+                            icon: const Icon(Icons.menu,
+                                color: Colors.teal, size: 28),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
                           ),
                         ),
                       ),
+                      const SizedBox(width: 8),
+                      ChoiceChip(
+                        label: const Text('Todas'),
+                        selected: _categoriaSelecionada == 'todas',
+                        onSelected: (v) =>
+                            setState(() => _categoriaSelecionada = 'todas'),
+                      ),
+                      const SizedBox(width: 8),
+                      ChoiceChip(
+                        label: const Text('Praias'),
+                        selected: _categoriaSelecionada == 'praia',
+                        onSelected: (v) =>
+                            setState(() => _categoriaSelecionada = 'praia'),
+                      ),
+                      const SizedBox(width: 8),
+                      ChoiceChip(
+                        label: const Text('Bombeiros'),
+                        selected: _categoriaSelecionada == 'bombeiro',
+                        onSelected: (v) =>
+                            setState(() => _categoriaSelecionada = 'bombeiro'),
+                      ),
+                      const Spacer(),
                     ],
                   ),
                 ),
@@ -158,32 +141,26 @@ class _MapScreenState extends State<MapScreen> {
                 ),
               ),
 
-              // Botão "Minha localização"
+              // Botão flutuante para registrar praia
               Positioned(
-                bottom: 100,
+                bottom: 16,
                 right: 16,
-                child: Material(
-                  color: Colors.white,
-                  elevation: 4,
-                  borderRadius: BorderRadius.circular(30),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(30),
-                    onTap: () => mapState.getCurrentLocation(),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      child: Row(
-                        children: [
-                          Icon(Icons.my_location, color: Colors.teal, size: 24),
-                          SizedBox(width: 8),
-                          Text('Minha localização',
-                              style: TextStyle(
-                                  color: Colors.teal,
-                                  fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                  ),
+                child: FloatingActionButton(
+                  backgroundColor: Colors.teal,
+                  onPressed: () {
+                    mapState.getCurrentLocation().then((_) {
+                      final pos = mapState.currentPosition;
+                      if (pos != null) {
+                        mapState.registerMockPraiaComLoc(
+                            pos.latitude, pos.longitude);
+                        print(
+                            'Praia registrada em: lat ${pos.latitude}, lng ${pos.longitude}');
+                      } else {
+                        print('Localização não disponível');
+                      }
+                    });
+                  },
+                  child: const Icon(Icons.add_location, color: Colors.white),
                 ),
               ),
 
@@ -254,7 +231,12 @@ class _MapScreenState extends State<MapScreen> {
             width: isSelected ? 60 : 40,
             height: isSelected ? 60 : 40,
             child: GestureDetector(
-              onTap: () => mapState.selectBeach(praia),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PraiaDetailsScreen(praia: praia),
+                ),
+              ),
               child: marker,
             ),
           );
@@ -263,6 +245,28 @@ class _MapScreenState extends State<MapScreen> {
         .cast<Marker>();
   }
 
-  /// Callback chamado quando um marcador é tocado
-  // ...existing code...
+  Widget _buildRatingRow(String label, double rating) {
+    return Row(
+      children: [
+        Text(
+          label,
+          style: const TextStyle(color: Colors.white),
+        ),
+        const SizedBox(width: 8),
+        Row(
+          children: List.generate(5, (index) {
+            if (index < rating.floor()) {
+              return const Icon(Icons.star, color: Colors.yellow, size: 20);
+            } else if (index < rating) {
+              return const Icon(Icons.star_half,
+                  color: Colors.yellow, size: 20);
+            } else {
+              return const Icon(Icons.star_border,
+                  color: Colors.yellow, size: 20);
+            }
+          }),
+        ),
+      ],
+    );
+  }
 }
